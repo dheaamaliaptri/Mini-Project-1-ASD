@@ -32,14 +32,53 @@ class daftar_buku:
     def is_empty(self):
         return self.head is None
 
+    def add_first(self, data):
+        new_node = Node(data)
+        if self.is_empty():
+            self.head = self.tail = new_node
+        else:
+            new_node.next = self.head
+            self.head.prev = new_node
+            self.head = new_node
+
     def add_last(self, data):
         new_node = Node(data)
-        if self.head is None:
+        if self.is_empty():
             self.head = self.tail = new_node
         else:
             new_node.prev = self.tail
             self.tail.next = new_node
             self.tail = new_node
+
+    def add_after(self, kode_buku, data):
+        current = self.head
+        while current:
+            if current.data.kode_buku == kode_buku:
+                new_node = Node(data)
+                new_node.next = current.next
+                new_node.prev = current
+                if current.next:
+                    current.next.prev = new_node
+                else:
+                    self.tail = new_node
+                current.next = new_node
+                break
+            current = current.next
+
+    def add_before(self, kode_buku, data):
+        current = self.head
+        while current:
+            if current.data.kode_buku == kode_buku:
+                new_node = Node(data)
+                new_node.prev = current.prev
+                new_node.next = current
+                if current.prev:
+                    current.prev.next = new_node
+                else:
+                    self.head = new_node
+                current.prev = new_node
+                break
+            current = current.next
 
     def update_data(self, kode_buku, data):
         current = self.head
@@ -49,18 +88,34 @@ class daftar_buku:
                 break
             current = current.next
 
+    def delete_first(self):
+        if self.head:
+            if self.head.next:
+                self.head = self.head.next
+                self.head.prev = None
+            else:
+                self.head = self.tail = None
+
+    def delete_last(self):
+        if self.tail:
+            if self.tail.prev:
+                self.tail = self.tail.prev
+                self.tail.next = None
+            else:
+                self.head = self.tail = None
+
     def delete_data(self, kode_buku):
         current = self.head
         while current:
             if current.data.kode_buku == kode_buku:
-                if current.prev:
+                if current.prev:  # Node bukan di awal
                     current.prev.next = current.next
-                else:
-                    self.head = current.next
-                if current.next:
+                else:  # Node di awal
+                    self.delete_first()
+                if current.next:  # Node bukan di akhir
                     current.next.prev = current.prev
-                else:
-                    self.tail = current.prev
+                else:  # Node di akhir
+                    self.delete_last()
                 break
             current = current.next
 

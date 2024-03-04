@@ -108,13 +108,13 @@ class daftar_buku:
         current = self.head
         while current:
             if current.data.kode_buku == kode_buku:
-                if current.prev:  # Node bukan di awal
+                if current.prev:
                     current.prev.next = current.next
-                else:  # Node di awal
+                else:
                     self.delete_first()
-                if current.next:  # Node bukan di akhir
+                if current.next:
                     current.next.prev = current.prev
-                else:  # Node di akhir
+                else:
                     self.delete_last()
                 break
             current = current.next

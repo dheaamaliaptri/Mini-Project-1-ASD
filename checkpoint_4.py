@@ -4,7 +4,7 @@ from prettytable import PrettyTable
 
 
 class Buku:
-    def __init__(self, judul, penulis, penerbit, tahun_terbit, kode_buku, jumlah):
+    def __init__(self, judul, penulis, penerbit, tahun_terbit, kode_buku, jumlah)
         self.judul = judul
         self.penulis = penulis
         self.penerbit = penerbit
